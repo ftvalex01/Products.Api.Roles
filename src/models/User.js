@@ -25,12 +25,12 @@ const userSchema = new Schema({
     versionKey:false
 });
 
-userSchema.methods.encryptPassword = async (password)=>{
+userSchema.statics.encryptPassword = async (password)=>{
   const salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(password,salt)
 
 }
-userSchema.methods.comparePassowrd=async(password,receivedPassword)=>{
+userSchema.statics.comparePassowrd=async(password,receivedPassword)=>{
     return await bcrypt.compare(password,receivedPassword)
 }   
 
