@@ -1,16 +1,24 @@
 import User from '../models/User'
-
+import jwt from 'jsonwebtoken'
+import config from '../config'
 
 export const signUp = async(req,res)=>{
     const {username,email,password,roles} = req.body;
-    const user = new User({
+
+    const newUser = new User({
         username,
         email,
-        password:User.encryptPassword(password)
+        password:await User.encryptPassword(password),
+    })
+    console.log(newUser)
+    const savedUser = await newUser.save()
+    const token = jwt.sign({id: savedUser._id},config.SECRET,{  //que dato se guarda , palabra secreta para guardarlo , objeto de configuracion
+        expiresIn:86400//24h
     })
 
-    console.log(user)
-    res.json('signup')
+    res.status(200).json({token})
+
+
 }
 
 export const signIn = async(req,res)=>{
