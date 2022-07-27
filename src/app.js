@@ -3,9 +3,10 @@ import morgan from "morgan";
 import pkg from '../package.json'
 import productsRoute from './routes/products.routes'
 import authRoutes from './routes/auth.routes'
-
+import { createRoles } from "./libs/initialSetup";
 
 const app = express()
+createRoles()
 
 
 app.set('pkg',pkg)//metodo set , guardamos una variable y le asignamos un valor
